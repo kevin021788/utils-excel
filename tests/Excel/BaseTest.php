@@ -8,13 +8,24 @@
 // +----------------------------------------------------------------------
 namespace Tests\Utils;
 
-use limx\Utils\Excel;
+use limx\Utils\Facades\Excel;
 use PHPUnit\Framework\TestCase;
 
 class BaseTest extends TestCase
 {
+    protected $data = [
+        [1, 'limx', '男'],
+        [2, 'lmx', '男'],
+        [3, 'Agnes', '女']
+    ];
+
     public function testBaseCase()
     {
-        echo 1;
+        $path = ROOT_PATH . '/storage/temp/';
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+        $file = $path . 'test.xlsx';
+        Excel::sheet(0)->title('测试')->create($this->data)->store($file);
     }
 }
