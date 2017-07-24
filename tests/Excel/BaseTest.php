@@ -25,7 +25,7 @@ class BaseTest extends TestCase
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
-        $file = $path . 'test.xlsx';
-        Excel::sheet(0)->title('测试')->create($this->data)->store($file);
+        $file = $path . 'test';
+        Excel::sheet(0)->title('测试')->create($this->data)->store($file, 'xls');
     }
 }

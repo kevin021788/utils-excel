@@ -75,10 +75,20 @@ class Excel
      * @author limx
      * @param $path
      */
-    public function store($path)
+    public function store($pathName, $ext = 'xlsx')
     {
-        $objWriter = PHPExcel_IOFactory::createWriter($this->objPHPExcel, 'Excel2007');
-        $objWriter->save($path);
+        switch ($ext) {
+            case 'xls':
+                $writer_type = 'Excel5';
+                break;
+            case 'xlsx':
+            default:
+                $writer_type = 'Excel2007';
+                $ext = 'xlsx';
+        }
+
+        $objWriter = PHPExcel_IOFactory::createWriter($this->objPHPExcel, $writer_type);
+        $objWriter->save($pathName . '.' . $ext);
     }
 
 }
