@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 namespace limx\Utils;
 
+use limx\Support\Str;
 use PHPExcel;
 use PHPExcel_IOFactory;
 
@@ -75,7 +76,7 @@ class Excel
      * @author limx
      * @param $path
      */
-    public function store($pathName, $ext = 'xlsx')
+    public function store($name, $path, $ext = 'xlsx')
     {
         switch ($ext) {
             case 'xls':
@@ -86,9 +87,9 @@ class Excel
                 $writer_type = 'Excel2007';
                 $ext = 'xlsx';
         }
-
         $objWriter = PHPExcel_IOFactory::createWriter($this->objPHPExcel, $writer_type);
-        $objWriter->save($pathName . '.' . $ext);
+        $save_name = Str::finish($path, '/') . $name . '.' . $ext;
+        return $objWriter->save($save_name);
     }
 
 }
