@@ -16,6 +16,6 @@ $data = [
     [3, 'Agnes', '女']
 ];
 
-$file = $path . 'test';
-Excel::sheet(0)->title('测试')->create($data)->store($file, 'xls');
+$file = 'test';
+Excel::sheet(0)->title('测试')->create($this->data)->store($file, $path, 'xls');
 ~~~
