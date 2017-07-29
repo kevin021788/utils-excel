@@ -11,6 +11,7 @@ namespace limx\Utils;
 use limx\Support\Str;
 use PHPExcel;
 use PHPExcel_IOFactory;
+use PHPExcel_Worksheet;
 
 class Excel
 {
@@ -90,6 +91,40 @@ class Excel
         $objWriter = PHPExcel_IOFactory::createWriter($this->objPHPExcel, $writer_type);
         $save_name = Str::finish($path, '/') . $name . '.' . $ext;
         return $objWriter->save($save_name);
+    }
+
+    public function load($path)
+    {
+        $this->objPHPExcel = PHPExcel_IOFactory::load($path);
+        return $this;
+    }
+
+    public function getSheet($index)
+    {
+        $this->sheet = $this->objPHPExcel->getSheet($index);
+        // $this->sheet->getCellByColumnAndRow();
+        return $this;
+    }
+
+    public function getRows()
+    {
+        if ($this->sheet instanceof PHPExcel_Worksheet) {
+            return $this->sheet->getHighestRow();
+        }
+        throw new \Exception('sheet is not defind!');
+    }
+
+    public function getColumns()
+    {
+        if ($this->sheet instanceof PHPExcel_Worksheet) {
+            return $this->sheet->getHighestDataColumn();
+        }
+        throw new \Exception('sheet is not defind!');
+    }
+
+    public function get()
+    {
+        return $this->sheet->toArray();
     }
 
 }

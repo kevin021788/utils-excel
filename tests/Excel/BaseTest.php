@@ -28,4 +28,25 @@ class BaseTest extends TestCase
         $file = 'test';
         Excel::sheet(0)->title('测试')->create($this->data)->store($file, $path, 'xls');
     }
+
+    public function testGetHighestRow()
+    {
+        $path = ROOT_PATH . '/storage/test.xls';
+        $excel = Excel::load($path)->getSheet(0);
+        $this->assertEquals(3, $excel->getRows());
+    }
+
+    public function testGetHighestColumns()
+    {
+        $path = ROOT_PATH . '/storage/test.xls';
+        $excel = Excel::load($path)->getSheet(0);
+        $this->assertEquals('C', $excel->getColumns());
+    }
+
+    public function testLoadCase()
+    {
+        $path = ROOT_PATH . '/storage/test.xls';
+        $res = Excel::load($path)->getSheet(0)->get();
+        $this->assertEquals($this->data, $res);
+    }
 }
